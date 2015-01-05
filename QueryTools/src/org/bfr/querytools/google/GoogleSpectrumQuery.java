@@ -49,15 +49,15 @@ public class GoogleSpectrumQuery
 	
 	// Constants
 	private final static String fccId = "TEST";
-	private final static String mode = "MODE_1";
-	
+	private final static String mode = "MODE_2";
+////////////////>>>>>>>>>>>>>>>AMJAD	
 	//"query" method call counter
-	private static int queryCounter = 1 ;
+//	private static int queryCounter = 1 ;
 	//Json array size controller 
-	private static int jsonArrController = 0;
+//	private static int jsonArrController = 0;
 	// Json array sizes
-	private static int[] jsonArrSizes = {1 ,2 , 4 , 8 ,16 , 32 ,64 , 128};
-	
+//	private static int[] jsonArrSizes = {1 ,2 , 4 , 8 ,16 , 32 ,64 , 128};
+/////////////<<<<<<<<<<<<<<<<<<<<<<	
 	private static JSONObject createFromStrings(String ... str) throws JSONException
 	{
 		JSONObject object = new JSONObject();
@@ -119,17 +119,19 @@ public class GoogleSpectrumQuery
 		return object;
 	}
 */	
-	private static JSONArray createQuery(double latitude, double longitude, int count) throws JSONException
+	//Amjad
+	//private static JSONArray createQuery(double latitude, double longitude, int count) throws JSONException
+	private static JSONArray createQuery(double latitude, double longitude) throws JSONException
 	{
 		JSONArray arr = new JSONArray(); 
 		
-		
-		for (int i = 0 ; i < count ; i++)
-			{
-				longitude += 0.001; // The change in longitude after 100 meter
+////////////////>>>>>>>>>>>>>>>AMJAD		
+		//for (int i = 0 ; i < count ; i++)
+		//	{
+			//	longitude += 0.001; // The change in longitude after 100 meter
 				
-				Logger.log(String.format("LONGITUDE %f" , longitude));
-			
+			//	Logger.log(String.format("LONGITUDE %f" , longitude));
+/////////////<<<<<<<<<<<<<<<<<<<<<<			
 				JSONObject object1 = new JSONObject();
 				
 				object1.put("jsonrpc", "2.0");
@@ -150,7 +152,7 @@ public class GoogleSpectrumQuery
 		
 				arr.put(object1);
 			
-			}
+		//	}
 		
 		
 		return arr;
@@ -188,14 +190,16 @@ public class GoogleSpectrumQuery
 	@SuppressWarnings("deprecation")
 	public static void query(double latitude, double longitude)
 	{
-		
-		jsonArrController =(queryCounter % 10.0 == 0 ) ? (++jsonArrController): jsonArrController;
-		queryCounter++;
-		jsonArrController = (jsonArrController >  jsonArrSizes.length-1 ? 0 : jsonArrController);
-		
-		Logger.log(String.format("JSON_ARRAY_SIZE %d queryCounter %d Json array Size %d" ,
-				jsonArrController , queryCounter, jsonArrSizes[jsonArrController]));
 
+////////////////>>>>>>>>>>>>>>>AMJAD		
+//		jsonArrController =(queryCounter % 10.0 == 0 ) ? (++jsonArrController): jsonArrController;
+//		queryCounter++;
+//		jsonArrController = (jsonArrController >  jsonArrSizes.length-1 ? 0 : jsonArrController);
+//		
+//		Logger.log(String.format("JSON_ARRAY_SIZE %d queryCounter %d Json array Size %d" ,
+//				jsonArrController , queryCounter, jsonArrSizes[jsonArrController]));
+
+/////////////<<<<<<<<<<<<<<<<<<<<<<
 		HttpClient client = new DefaultHttpClient();
 		HttpPost request = new HttpPost("https://www.googleapis.com/rpc");
 		HttpConnectionParams.setConnectionTimeout(client.getParams(), 10*1000);
@@ -205,8 +209,9 @@ public class GoogleSpectrumQuery
 		
 		try
 		{
-			request.setEntity(new StringEntity(createQuery(latitude, longitude, jsonArrSizes[jsonArrController] ).toString(), HTTP.UTF_8));
-
+			//Amjad
+//			request.setEntity(new StringEntity(createQuery(latitude, longitude, jsonArrSizes[jsonArrController] ).toString(), HTTP.UTF_8));
+			request.setEntity(new StringEntity(createQuery(latitude, longitude ).toString(), HTTP.UTF_8));
 			
 			Logger.log(String.format("google-query-execute %.4f %.4f", latitude, longitude));
 			
