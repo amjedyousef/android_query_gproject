@@ -212,7 +212,9 @@ public class GoogleSpectrumQuery
 			//Amjad
 //			request.setEntity(new StringEntity(createQuery(latitude, longitude, jsonArrSizes[jsonArrController] ).toString(), HTTP.UTF_8));
 			request.setEntity(new StringEntity(createQuery(latitude, longitude ).toString(), HTTP.UTF_8));
-			
+			//Amjad
+			Logger.log("google-query-start");
+		
 			Logger.log(String.format("google-query-execute %.4f %.4f", latitude, longitude));
 			
 			HttpResponse response = client.execute(request);
